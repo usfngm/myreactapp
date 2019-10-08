@@ -1,24 +1,55 @@
-import React from 'react';
+import React, { useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { Form, Row, Col, Container, Button, Alert } from 'react-bootstrap';
+import axios from 'axios';
+
+
+
 
 function App() {
+  const [num1, setNum1] = useState();
+  const [num2, setNum2] = useState();
+  const [result, setResult] = useState(0);
+  const test = () => {
+    axios.get('http://184.172.229.43:31339?num1=' + num1 + '&num2=' + num2).then((result) => {
+      console.log(result.data.result);
+      setResult(result.data.result);
+    }).catch((error) => {
+      console.log(error);
+    });
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Welcome to my calculator app</h1>
+      <Container>
+        <Form>
+          <Row>
+            <Col>
+              <Form.Control
+                placeholder="First number"
+                onChange={(e) => { setNum1(e.target.value) }}
+              />
+            </Col>
+            <Col>
+              <Form.Control
+                placeholder="Second number"
+                onChange={(e) => { setNum2(e.target.value) }} />
+            </Col>
+            <Col style={{ display: 'flex', alignItems: 'center' }}>
+              <span style={{ fontSize: 26, marginRight: 30 }}>=</span>
+              <Form.Control value={result} disabled></Form.Control>
+            </Col>
+          </Row>
+        </Form>
+        <Form>
+          <Row style={{ display: 'flex' }}>
+            <Button onClick={test} style={{ flex: 1, marginTop: 20 }}>
+              Addition
+            </Button>
+          </Row>
+        </Form>
+      </Container>
     </div>
   );
 }

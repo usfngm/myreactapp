@@ -11,17 +11,28 @@ function App() {
   const [num1, setNum1] = useState();
   const [num2, setNum2] = useState();
   const [result, setResult] = useState(0);
-  const test = () => {
-    axios.get('http://184.172.229.43:31339?num1=' + num1 + '&num2=' + num2).then((result) => {
+
+  const addButton = () => {
+    axios.get('http://localhost:3001?num1=' + num1 + '&num2=' + num2).then((result) => {
       console.log(result.data.result);
       setResult(result.data.result);
     }).catch((error) => {
       console.log(error);
     });
   }
+
+  const divButton = () => {
+    axios.get('http://localhost:3002?num1=' + num1 + '&num2=' + num2).then((result) => {
+      console.log(result.data.result);
+      setResult(result.data.result);
+    }).catch((error) => {
+      console.log(error);
+    });
+  }
+
   return (
     <div className="App">
-      <h1>Welcome to my useless app</h1>
+      <h1>Welcome to my calculator app</h1>
       <Container>
         <Form>
           <Row>
@@ -44,7 +55,12 @@ function App() {
         </Form>
         <Form>
           <Row style={{ display: 'flex' }}>
-            <Button onClick={test} style={{ flex: 1, marginTop: 20 }}>
+            <Button onClick={addButton} style={{ flex: 1, marginTop: 20 }}>
+              Addition
+            </Button>
+          </Row>
+          <Row style={{ display: 'flex' }}>
+            <Button onClick={divButton} style={{ flex: 1, marginTop: 20 }}>
               Addition
             </Button>
           </Row>
